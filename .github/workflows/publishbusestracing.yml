@@ -53,7 +53,7 @@ jobs:
           if ([string]::IsNullOrEmpty($latestTag)) {
             $major = 1; $minor = 0; $patch = 0
           } else {
-            $version = $latestTag.TrimStart('v')
+            $version = $latestTag.TrimStart('bt')
             $parts = $version.Split('.')
             $major = [int]$parts[0]; $minor = [int]$parts[1]; $patch = [int]$parts[2]
             $bump = "${{ github.event.inputs.version }}"
@@ -171,7 +171,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git fetch --tags
-          $tag = "v${{ needs.versioning.outputs.next_version }}"
+          $tag = "bt${{ needs.versioning.outputs.next_version }}"
           # Only create if it doesn't exist
           $existing = (git tag --list $tag)
           if (-not $existing) {
@@ -184,8 +184,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ needs.versioning.outputs.next_version }}
-          name: "Buses Tracing Tools (winget) v${{ needs.versioning.outputs.next_version }}"
+          tag_name: bt${{ needs.versioning.outputs.next_version }}
+          name: "Buses Tracing Tools (winget) bt${{ needs.versioning.outputs.next_version }}"
           files: |
             release/zips-win-x64/busestracing-win-x64.zip
             release/zips-win-arm64/busestracing-win-arm64.zip
