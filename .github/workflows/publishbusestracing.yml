@@ -185,7 +185,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: bt${{ needs.versioning.outputs.next_version }}
-          name: "Buses Tracing Tools (winget) bt${{ needs.versioning.outputs.next_version }}"
+          name: "Buses Tracing Tools (winget) v${{ needs.versioning.outputs.next_version }}"
           files: |
             release/zips-win-x64/busestracing-win-x64.zip
             release/zips-win-arm64/busestracing-win-arm64.zip
