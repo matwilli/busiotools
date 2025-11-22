@@ -10,8 +10,6 @@ on:
         description: "Build configuration (Release/Debug)"
         required: false
         default: "Release"
-env:
-  ACTIONS_STEP_DEBUG: true
 jobs:
   # 1) Compute next version once. Tag happens in the release job.
   versioning:
@@ -25,28 +23,19 @@ jobs:
           fetch-depth: 0           # full history
           fetch-tags: true         # also fetch tags
 
-      - name: Fetch tags
-        run: git fetch --tags
-
       - name: Calculate next version
         id: version
         shell: pwsh
         run: |
          $latestTag = ''
           try {
-            Write-Host "log 1"
             $latestTag = (git describe --tags --abbrev=0 --match "bt[0-9]*.[0-9]*.[0-9]*")
           } catch {
-            Write-Host "log 2"
             $latestTag = ''
           } finally {
-            Write-Host "log 3"
             $global:LASTEXITCODE = 0
           }
-
-          Write-Host "log 4"
-          Write-Host "log5 start $latestTag end"
-          
+         
           if ([string]::IsNullOrEmpty($latestTag)) {
             $major = 1; $minor = 0; $patch = 0
           } else {
